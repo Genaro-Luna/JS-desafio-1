@@ -4,25 +4,46 @@ alert(`Bienvenido ${nombre} ${apellido}.`)
 
 alert("Eligue los dispositivos que deseas sumar al carrito")
 
-let producto = parseInt(prompt("1-iPhone 2-Notebook 3-Pc 4-Ps5 5-Xbox X"));
+let productoEscogido = parseInt(prompt("1-iPhone 2-Notebook 3-Pc 4-Ps5 5-Xbox X"));
 let carrito = 0
 let seguirComprando = true
 let decision
 
+const productosExistentes = []
+
+class Producto{
+    constructor(id, nom, precio){
+        this.id = id
+        this.nom = nom
+        this.precio = precio
+    }
+}
+
+const iphone = new Producto(1, "iPhone", 300)
+productosExistentes.push(iphone)
+const notebook = new Producto(2, "Notebook", 500)
+productosExistentes.push(notebook)
+const pc = new Producto(4, "Pc", 700)
+productosExistentes.push(pc)
+const ps5 = new Producto(5, "Ps5", 800)
+productosExistentes.push(ps5)
+const xbox = new Producto(6, "Xbox X", 800)
+productosExistentes.push(xbox)
+
 while(seguirComprando === true){
-    if(producto === 1){
-        carrito += 300
-    } else if(producto === 2){
-        carrito += 500
-    } else if(producto === 3){
-        carrito += 700
-    } else if(producto === 4 || producto === 5){
-        carrito += 800
+    
+    const productoCliente = productosExistentes.find(producto => producto.id === productoEscogido)
+
+    if(productoCliente){
+        carrito = carrito + productoCliente.precio
+    } else {
+        productoEscogido = parseInt(prompt("1-iPhone 2-Notebook 3-Pc 4-Ps5 5-Xbox X"))
+        continue
     }
 
     decision = parseInt(prompt("Quiere seguir comprando? 1-Si 2-No"))
     if(decision === 1){
-        producto = parseInt(prompt("1-iPhone 2-Notebook 3-Pc 4-Ps5 5-Xbox X"))
+        productoEscogido = parseInt(prompt("1-iPhone 2-Notebook 3-Pc 4-Ps5 5-Xbox X"))
     } else {
         seguirComprando = false
     }
