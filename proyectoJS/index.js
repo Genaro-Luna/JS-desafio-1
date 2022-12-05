@@ -2,30 +2,7 @@ const nombreInput = document.getElementById(`nombre`)
 const apellidoInput = document.getElementById(`apellido`)
 const botonIngresar = document.getElementById(`ingresar`)
 const divTitulo = document.getElementById(`divTitulo`)
-
-botonIngresar.onclick = () => {
-    if(nombreInput.value || apellidoInput.value){
-        const usuario = {
-        nombre: nombreInput.value,
-        apellido: apellidoInput.value,
-    }
-        localStorage.setItem(`usuario`, JSON.stringify(usuario))
-        pantallaDeCompra(usuario)
-    }
-}
-
-function pantallaDeCompra(usuario){
-    divTitulo.remove()
-
-    const tituloSaludo = document.createElement(`h2`)
-    tituloSaludo.innerText = `Bienvenido ${usuario.nombre} ${usuario.apellido}, dinos que deseas sumar al carrito!`
-    divSaludo.append(tituloSaludo)
-}
-
-const usuario = JSON.parse(localStorage.getItem(`usuario`))
-if(usuario){
-    pantallaDeCompra(usuario)
-}
+const listaProductos = document.getElementById(`lista`)
 
 class Producto{
     constructor(id, nom, precio){
@@ -40,10 +17,43 @@ const notebook = new Producto(2, "Notebook", 500)
 const pc = new Producto(3, "Pc", 700)
 const ps5 = new Producto(4, "Ps5", 800)
 const xbox = new Producto(5, "Xbox X", 800)
+const consolador = new Producto(6,"Consolador multi funcion XL", 1200)
 
-const productosExistentes = [iphone, notebook, pc, ps5, xbox]
+const productosExistentes = [iphone, notebook, pc, ps5, xbox, consolador]
 
 
+botonIngresar.onclick = () => {
+    if(nombreInput.value || apellidoInput.value){
+        const usuario = {
+        nombre: nombreInput.value,
+        apellido: apellidoInput.value,
+    }
+        localStorage.setItem(`usuario`, JSON.stringify(usuario))
+
+        pantallaDeCompra(usuario)
+    }
+}
+
+function pantallaDeCompra(usuario){
+    divTitulo.remove()
+
+    const tituloSaludo = document.createElement(`h2`)
+    tituloSaludo.innerText = `Bienvenido ${usuario.nombre} ${usuario.apellido}, dinos que deseas sumar al carrito!`
+    divSaludo.append(tituloSaludo)
+
+    listaProductos.innerHTML = 
+        `<select name="productos" id="productos">
+        </select>`
+    console.log(document.querySelector(`#productos`))
+        for(const nom of productosExistentes){
+            document.querySelector(`#productos`).insertAdjacentHTML("afterbegin",`<option>${nom.nom}</option>`)
+        }
+}
+
+const usuario = JSON.parse(localStorage.getItem(`usuario`))
+if(usuario){
+    pantallaDeCompra(usuario)
+}
 
 
 
